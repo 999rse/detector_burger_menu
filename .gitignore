@@ -1,0 +1,13 @@
+# Data
+/dataset
+/models
+/__pycache__
+
+/parser_data/screenshots
+/parser_data/links
+!/parser_data/sities_screenshot_parser.py
+!/parser_data/list_of_sites_pareser.py
+
+# Notebook
+debugbook.ipynb
+
