@@ -5,15 +5,29 @@ import pandas as pd
 import os
 
 
-url_website = 'https://www.liveinternet.ru/rating/#page='
+url_website = 'https://www.liveinternet.ru/rating/#page=' # Change me
 
 options = webdriver.ChromeOptions()
 options.add_argument('--headless')
 
 def selector_structure(link_element):
+    """
+    Return structure of selector
+
+    :link_elemnet - Order number of the link we want to get
+    """
     return f'body > section > div > section > section > div#rows > div:nth-child({link_element}) > div.result-link > div.text > a'
 
-def list_os_sites_parser(url, pages_on_website:int, elements_on_page:int, attribute:str):
+def list_os_sites_parser(url, pages_on_website:int, elements_on_page:int):
+    """
+    Return csv file with list of links
+
+    :url - website url. (In this case after `#page=` in url will be add number of page
+
+    :pages_on_website - total page count 
+
+    :elements_on_page - total links on page
+    """
 
     if not os.path.exists('parser_data/links'):
         os.makedirs('parser_data/links')
@@ -31,8 +45,8 @@ def list_os_sites_parser(url, pages_on_website:int, elements_on_page:int, attrib
             links = driver.find_elements(By.CSS_SELECTOR, selector)
 
             for link in links:
-                links_list.append(link.get_attribute(attribute))
-                print(link.get_attribute(attribute), element)
+                links_list.append(link.get_attribute('href'))
+                print(link.get_attribute('href'), element)
         
         driver.quit()
 
@@ -41,10 +55,9 @@ def list_os_sites_parser(url, pages_on_website:int, elements_on_page:int, attrib
             links_df = pd.DataFrame(links_list)
             links_df.to_csv(f'parser_data/links/output_links_{page}.csv', index=False)
             
-    
-    print('All links are saved to output_links.csv')
     links_df = pd.DataFrame(links_list)
     links_df.to_csv('parser_data/links/output_links_all.csv', index=False)
+    print('All links are saved to output_links.csv')
 
 
-list_os_sites_parser(url=url_website, pages_on_website=5150, elements_on_page=30, attribute='href')
+list_os_sites_parser(url=url_website, pages_on_website=5150, elements_on_page=30)
