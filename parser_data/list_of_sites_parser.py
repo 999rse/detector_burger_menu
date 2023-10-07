@@ -29,8 +29,8 @@ def list_os_sites_parser(url, pages_on_website:int, elements_on_page:int):
     :elements_on_page - total links on page
     """
 
-    if not os.path.exists('parser_data/links'):
-        os.makedirs('parser_data/links')
+    if not os.path.exists('./parser_data/links'):
+        os.makedirs('./parser_data/links')
 
     links_list = []
 
@@ -53,10 +53,10 @@ def list_os_sites_parser(url, pages_on_website:int, elements_on_page:int):
         if page % 10 == 0:
             print(f'Links on {page} pages have been preserved to output_links_{page}.csv')
             links_df = pd.DataFrame(links_list)
-            links_df.to_csv(f'parser_data/links/output_links_{page}.csv', index=False)
+            links_df.to_csv(f'./parser_data/links/output_links_{page}.csv', index=False)
             
     links_df = pd.DataFrame(links_list)
-    links_df.to_csv('parser_data/links/output_links_all.csv', index=False)
+    links_df.to_csv('./parser_data/links/output_links_all.csv', index=False)
     print('All links are saved to output_links.csv')
 
 

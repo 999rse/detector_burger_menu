@@ -11,10 +11,10 @@ options.add_argument('--headless')
 
 driver = webdriver.Chrome(options=options)
 
-site_urls = pd.read_csv('parser_data/top-1m.csv') # Change me
+site_urls = pd.read_csv('./parser_data/top-1m.csv') # Change me
 
-if not os.path.exists('parser_data/screenshots'):
-    os.makedirs('parser_data/screenshots')
+if not os.path.exists('./parser_data/screenshots'):
+    os.makedirs('./parser_data/screenshots')
 
 for idx, row in site_urls.iterrows():
     site_url = row.iloc[0]
@@ -29,7 +29,7 @@ for idx, row in site_urls.iterrows():
         print(f"Access error to {site_url}: {traceback_info}")
 
     screenshot_name = f'screenshot_{site_url.replace("https://", "").replace(".", "_")}.png'
-    driver.save_screenshot(os.path.join('parser_data/screenshots', screenshot_name))
+    driver.save_screenshot(os.path.join('./parser_data/screenshots', screenshot_name))
     
     print(f' The screenshot was done for page: {site_url} and save to file {screenshot_name}')
 
