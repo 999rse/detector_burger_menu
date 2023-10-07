@@ -1,15 +1,20 @@
 import os
 import pandas as pd
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.common.exceptions import WebDriverException
 
 # Parser parameters
+chrome_driver_path = './parser_data/driver/chromedriver'
+
+service = Service(chrome_driver_path)
+
 options = webdriver.ChromeOptions()
 options.add_argument('--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148')
 options.add_argument('--window-size=375,812')
 options.add_argument('--headless')
 
-driver = webdriver.Chrome(options=options)
+driver = webdriver.Chrome(service=service, options=options)
 
 site_urls = pd.read_csv('./parser_data/top-1m.csv') # Change me
 

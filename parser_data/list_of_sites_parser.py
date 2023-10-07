@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
 import pandas as pd
@@ -6,6 +7,10 @@ import os
 
 
 url_website = 'https://www.liveinternet.ru/rating/#page=' # Change me
+
+chrome_driver_path = './parser_data/driver/chromedriver'
+
+service = Service(chrome_driver_path)
 
 options = webdriver.ChromeOptions()
 options.add_argument('--headless')
@@ -35,7 +40,7 @@ def list_os_sites_parser(url, pages_on_website:int, elements_on_page:int):
     links_list = []
 
     for page in range(1, pages_on_website + 1):
-        driver = webdriver.Chrome(options)
+        driver = webdriver.Chrome(service=service, options=options)
         url_new = url + str(page) + ';'
         print(url_new)
         driver.get(url_new)
